@@ -19,7 +19,14 @@
 
 typedef struct	s_map
 {
+	t_list *tab;
 	int nb_ant;
 }				t_map;
+
+void put_connexion_in_tab(t_list *tab, char **connexion);
+void extract_information(t_map *map, t_list *read);
+void put_read_in_list(t_map *map);
+char *ft_strchr_before(char *str, char c);
+void display(t_map map);
 
 #endif

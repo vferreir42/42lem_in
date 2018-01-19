@@ -21,10 +21,15 @@ typedef struct		s_list {
 	void			*content;
 	char			*coord_x;
 	char			*coord_y;
-	char			*co;
 	int 			info_salle;
+	int				position;
+	int				gris;
 
 	size_t			content_size;
+
+	struct s_list 		*co;
+	struct s_list			*conext;
+
 	struct s_list	*next;
 }					t_list;
 

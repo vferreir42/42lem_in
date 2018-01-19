@@ -13,6 +13,8 @@
 NAME	=	lem_in
 
 SRCS	=	main.c				\
+				read.c				\
+				display.c			\
 				./get_next_line/get_next_line.c
 
 OBJS	=	$(SRCS:.c=.o)
