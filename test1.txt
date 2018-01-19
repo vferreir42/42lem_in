@@ -1,0 +1,10 @@
+3
+##start
+0 1 0
+##end
+1 5 0
+2salle 9 0
+3salle 13 10
+0-2salle
+2salle-3salle
+3salle-1
