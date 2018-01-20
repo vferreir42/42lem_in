@@ -36,5 +36,6 @@ int main(void)
 	add_position(map);
 	shortest_way(&map);
 	display(map);
+	display_list(map);
 	return (0);
 }

@@ -29,6 +29,7 @@ void extract_information(t_map *map, t_list *read);
 void put_read_in_list(t_map *map);
 char *ft_strchr_before(char *str, char c);
 void display(t_map map);
+void display_list(t_map map);
 void add_position(t_map map);
 void shortest_way(t_map *map);
 

@@ -90,5 +90,7 @@ void	shortest_way(t_map *map)
 			way_inverse = way_inverse->next;
 		next->next = ft_lstnew(way_inverse->content, 1000);
 		next = next->next;
+		next->nb_ant = 0;
+		next->name_ant = 0;
 	}
 }
