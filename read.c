@@ -20,7 +20,7 @@ void	put_connexion_in_tab(t_list *tab, char **connexion)
 
 	sauv = tab;
 	i = 0;
-	while (i < 9)
+	while (connexion[i])
 	{
 		tab = sauv;
 		while (ft_strcmp(tab->content, ft_strchr_before(connexion[i], '-')) != 0)
@@ -75,7 +75,7 @@ void	extract_information(t_map *map, t_list *read)
 	tab = ft_lstnew("0", 16);
 	next = tab;
 	i = 0;
-	connexion = malloc(sizeof(char *) * 100);
+	connexion = malloc(sizeof(char *) * 1000);
 	while (read)
 	{
 		if (ft_strcmp(read->content, "##start") == 0)
@@ -100,15 +100,6 @@ void	extract_information(t_map *map, t_list *read)
 		read = read->next;
 	}
 	connexion[i] = NULL;
-
-	i = 0;
-	while (connexion[i])
-	{
-		printf("connexion : %s\n", connexion[i]);
-		i++;
-	}
-
-
 	tab = tab->next;
 	put_connexion_in_tab(tab, connexion);
 	map->tab = tab;
@@ -131,5 +122,4 @@ void	put_read_in_list(t_map *map)
 	map->nb_ant = ft_atoi(read->content);
 	read = read->next;
 	extract_information(map, read);
-	display(*map);
 }

@@ -14,6 +14,8 @@ NAME	=	lem_in
 
 SRCS	=	main.c				\
 				read.c				\
+				position_salle.c	\
+				shortest_way.c		\
 				display.c			\
 				./get_next_line/get_next_line.c
 

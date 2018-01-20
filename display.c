@@ -18,10 +18,10 @@ void display(t_map map)
 	t_list *next;
 
 	tab = map.tab;
-	printf("\n");
 	while (tab)
 	{
 		printf("\033[33mNom : %5s\033[0m || Salle %d", tab->content, tab->info_salle);
+		printf(" || Pos : %6d || Gris %d", tab->position, tab->gris);
 	//	printf(" || X : %s || Y : %s", tab->coord_x, tab->coord_y);
 		if (tab->co)
 		{
@@ -29,7 +29,7 @@ void display(t_map map)
 			printf("\033[32m");
 			while (next)
 			{
-				printf(" || Connexion %4s", next->content);
+				printf(" || Co %4s", next->content);
 				next = next->next;
 			}
 			printf("\033[0m");
@@ -38,4 +38,14 @@ void display(t_map map)
 
 		tab = tab->next;
 	}
+	printf("\n");
+
+
+	while (map.way)
+	{
+		printf("%s --> ", map.way->content);
+		map.way = map.way->next;
+	}
+	
+	printf("\n");
 }
