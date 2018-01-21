@@ -24,6 +24,7 @@ typedef struct		s_list {
 	int 			info_salle;
 	int				position;
 	int				nb_way;
+	int 			size_way;
 	int				gris;
 	int				nb_ant;
 	int       name_ant;

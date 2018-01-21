@@ -35,10 +35,10 @@ int main(void)
 	put_read_in_list(&map);
 	add_position(map);
 	add_nbway(map);
+
+
+	all_way(&map);
 	display_list(map);
 
-//	shortest_way(&map);
-//	display(map);
-//	display_list(map);
 	return (0);
 }

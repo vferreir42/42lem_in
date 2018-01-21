@@ -22,20 +22,50 @@ int		tab_co_position(t_map map, char *name)
 	return (tab->position);
 }
 
+int		tab_co_nbway(t_map map, char *name)
+{
+	t_list	*tab;
+
+	tab = map.tab;
+	while (ft_strcmp(tab->content, name) != 0)
+		tab = tab->next;
+	return (tab->nb_way);
+}
+
+int 	next_gris(t_map map, char *name)
+{
+	t_list	*tab;
+
+	tab = map.tab;
+	while (ft_strcmp(tab->content, name) != 0)
+		tab = tab->next;
+	if (tab->gris == 0)
+		return (1);
+	else
+		return (0);
+}
+
 char	*best_way(t_map map, t_list *tab)
 {
 	t_list	*tab_co;
 	int position;
+	int position_next;
+	int nb_way;
+	int nb_way_next;
 	char *name;
 
 	tab_co = tab->co;
-	position = 1000;
+	position = tab->position;
+	nb_way = 1000;
 	name = NULL;
 	while (tab_co)
 	{
-		if (tab_co_position(map, tab_co->content) < position)
+		position_next = tab_co_position(map, tab_co->content);
+		nb_way_next = tab_co_nbway(map, tab_co->content);
+		if (position_next <= position && next_gris(map, tab_co->content) == 1 && nb_way_next <= nb_way)
 		{
-			position = tab_co_position(map, tab_co->content);
+			position = position_next;
+			nb_way = nb_way_next;
 			name = ft_strdup(tab_co->content);
 		}
 		tab_co = tab_co->next;
@@ -58,30 +88,37 @@ t_list	*shortest_way_inverse(t_map map)
 	while (tab->info_salle != 1)
 	{
 		name = best_way(map, tab);
+		if (name == NULL)
+			return (NULL);
 		next->next = ft_lstnew(name, 100);
 		next = next->next;
 		tab = map.tab;
 		while (ft_strcmp(tab->content, name) != 0)
 			tab = tab->next;
+		if (tab->info_salle != 1)
+			tab->gris = 1;
 	}
 	return (way_inverse);
 }
 
-void	shortest_way(t_map *map)
+t_list	*shortest_way(t_map *map)
 {
 	t_list	*way_inverse;
+	t_list 	*way;
 	t_list	*sauv;
 	t_list	*next;
 	int		nb;
 	int		i;
 
 	way_inverse = shortest_way_inverse(*map);
+	if (way_inverse == NULL)
+		return (NULL);
 	sauv = way_inverse;
 	nb = 0;
 	while (way_inverse->next && ++nb)
 		way_inverse = way_inverse->next;
-	map->way = ft_lstnew(way_inverse->content, 1000);
-	next = map->way;
+	way = ft_lstnew(way_inverse->content, 1000);
+	next = way;
 	while (nb-- > 0)
 	{
 		i = -1;
@@ -93,4 +130,5 @@ void	shortest_way(t_map *map)
 		next->nb_ant = 0;
 		next->name_ant = 0;
 	}
+	return (way);
 }

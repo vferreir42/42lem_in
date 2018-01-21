@@ -59,6 +59,26 @@ void display(t_map map)
 	}
 }
 
+void display_chemin(t_map map)
+{
+	t_list *all_way;
+	t_list *way;
+
+	all_way = map.all_the_way;
+	while (all_way)
+	{
+		printf("SIZE WAY = %d\n", all_way->size_way);
+		way = all_way->content;
+		while (way)
+		{
+			printf(" %-2s-->", way->content);
+			way = way->next;
+		}
+		printf("\n");
+		all_way = all_way->next;
+	}
+}
+
 void display_list(t_map map)
 {
 	t_list *tab;
@@ -87,12 +107,6 @@ void display_list(t_map map)
 		tab = tab->next;
 	}
 	ft_printf("\n");
+	display_chemin(map);
 
-	/*
-	while (map.way)
-	{
-		ft_printf("%s-->", map.way->content);
-		map.way = map.way->next;
-	}
-	*/
 }

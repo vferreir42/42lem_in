@@ -84,6 +84,7 @@ void	extract_information(t_map *map, t_list *read)
 			read = read->next;
 			next = reduce_extract_information(map, read, next);
 			next->info_salle = 1;
+			next->nb_way = 1;
 		}
 		else if (ft_strcmp(read->content, "##end") == 0)
 		{
