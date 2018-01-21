@@ -22,9 +22,10 @@ void display_progression(t_map map)
 		if (way->nb_ant > 0)
 			way->name_ant++;
 		if (way->nb_ant > 0 && way->name_ant > 0)
-			printf("L%d-%s\n", way->name_ant, way->content);
+			ft_printf("L%d-%s\n", way->name_ant, way->content);
 		way = way->next;
 	}
+//	ft_printf("\n");
 }
 
 void display(t_map map)
@@ -63,31 +64,35 @@ void display_list(t_map map)
 	t_list *tab;
 	t_list *next;
 
+	ft_printf("\n");
 	tab = map.tab;
 	while (tab)
 	{
-		printf("\033[33mNom : %5s\033[0m || Salle %d", tab->content, tab->info_salle);
-		printf(" || Pos : %6d || Gris %d", tab->position, tab->gris);
+		ft_printf("\033[33mNom : %3s\033[0m || %d", tab->content, tab->info_salle);
+		ft_printf(" || Pos : %3d || Nb_way : %3d || Gris %d", tab->position, tab->nb_way, tab->gris);
 	//	printf(" || X : %s || Y : %s", tab->coord_x, tab->coord_y);
 		if (tab->co)
 		{
 			next = tab->co;
-			printf("\033[32m");
+			ft_printf("\033[32m");
 			while (next)
 			{
-				printf(" || Co %4s", next->content);
+				ft_printf(" || Co %3s", next->content);
 				next = next->next;
 			}
-			printf("\033[0m");
+			ft_printf("\033[0m");
 		}
-		printf("\n");
+		ft_printf("\n");
 
 		tab = tab->next;
 	}
-	printf("\n");
+	ft_printf("\n");
+
+	/*
 	while (map.way)
 	{
-		printf("%s-->", map.way->content);
+		ft_printf("%s-->", map.way->content);
 		map.way = map.way->next;
 	}
+	*/
 }

@@ -70,7 +70,7 @@ void	add_position(t_map map)
 	tab->position = 0;
 	while (sauv)
 	{
-		next_salle(map, tab->co->content, 1);
+		next_salle(map, sauv->content, 1);
 		sauv = sauv->next;
 	}
 }

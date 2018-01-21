@@ -23,6 +23,7 @@ typedef struct		s_list {
 	char			*coord_y;
 	int 			info_salle;
 	int				position;
+	int				nb_way;
 	int				gris;
 	int				nb_ant;
 	int       name_ant;

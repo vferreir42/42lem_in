@@ -10,11 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	lem_in
+NAME	=	lem-in
 
 SRCS	=	main.c				\
 				read.c				\
 				position_salle.c	\
+				number_way.c			\
 				shortest_way.c		\
 				display.c			\
 				./get_next_line/get_next_line.c
@@ -25,7 +26,7 @@ CC	=	@gcc -g3 -fsanitize=address
 
 CFLAGS	=	-I ./libft/includes -I ./get_next_line
 
-LIB_PATH	=	./libft/libft.a
+LIB_PATH	=	./libft/libft.a ./ft_printf/libftprintf.a
 
 RM	=	rm -rf
 

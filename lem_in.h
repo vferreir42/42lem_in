@@ -24,6 +24,8 @@ typedef struct	s_map
 	int nb_ant;
 }				t_map;
 
+int				ft_printf(const char *format, ...);
+
 void put_connexion_in_tab(t_list *tab, char **connexion);
 void extract_information(t_map *map, t_list *read);
 void put_read_in_list(t_map *map);
@@ -32,5 +34,6 @@ void display(t_map map);
 void display_list(t_map map);
 void add_position(t_map map);
 void shortest_way(t_map *map);
+void 	add_nbway(t_map map);
 
 #endif

@@ -61,6 +61,7 @@ t_list 	*reduce_extract_information(t_map *map, t_list *read, t_list *next)
 	next->info_salle = 0;
 	next->co = NULL;
 	next->gris = 0;
+	next->nb_way = 0;
 	next->position = 10000;
 	return (next);
 }
