@@ -21,63 +21,47 @@ void  reset_gris(t_list *list)
 	}
 }
 
-int position_next_rec(t_map map, char *name)
-{
-	t_list *tab;
-
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	return (tab->position);
-}
-
-void recursive_nb_way(t_map map, char *name, int position)
+void recursive_nb_way(t_map map, t_list *tab, int position)
 {
 	int position_next;
-	t_list *tab;
-	t_list *tab_co;
+	int i;
+	t_list *link;
 
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	tab->nb_way++;
-//	printf("Name recursive : %s\n", tab->content);
-	tab_co = tab->co;
-	while (tab_co)
+	i = 0;
+	link = tab->link;
+	while (link)
 	{
-//		printf("Name recursive next : %s\n", tab_co->content);
-		position_next = position_next_rec(map, tab_co->content);
-//		printf("position_next : %d\n", position_next);
-		if (position_next < position && position_next != 0)
-			recursive_nb_way(map, tab_co->content, position - 1);
-		tab_co = tab_co->next;
+		position_next = link->l_content->position;
+		if (position_next < position && link->l_content->info_salle != 2)
+		{
+			if (i == 0)
+			{
+				tab->nb_way++;
+				i = 1;
+			}
+			recursive_nb_way(map, link->l_content, link->l_content->position);
+		}
+		link = link->next;
 	}
 }
-/*
-void  calcul_total_way(t_map map)
-{
-	t_list *tab;
-	t_list *tab_co;
 
-	tab = map.tab;
-	while (tab->info_salle != 1)
-		tab = tab->next;
-}
-*/
 void 	add_nbway(t_map map)
 {
 	t_list *tab;
-	t_list *tab_co;
+	t_list *link;
 
 	reset_gris(map.tab);
 	tab = map.tab;
 	while (tab->info_salle != 2)
 		tab = tab->next;
-	tab_co = tab->co;
-	while (tab_co)
+	link = tab->link;
+	while (link)
 	{
-		recursive_nb_way(map, tab_co->content, position_next_rec(map, tab->co->content));
-		tab_co = tab_co->next;
+		recursive_nb_way(map, link->l_content, link->l_content->position);
+		link = link->next;
 	}
-//	calcul_total_way(t_map);
+	tab = map.tab;
+	while (tab->info_salle != 1)
+		tab = tab->next;
+	tab->nb_way = 10000;
 }

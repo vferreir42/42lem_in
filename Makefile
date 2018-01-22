@@ -14,6 +14,7 @@ NAME	=	lem-in
 
 SRCS	=	main.c				\
 				read.c				\
+				created_graph.c	\
 				position_salle.c	\
 				number_way.c			\
 				shortest_way.c		\

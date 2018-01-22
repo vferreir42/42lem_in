@@ -93,11 +93,11 @@ void display_list(t_map map)
 	//	printf(" || X : %s || Y : %s", tab->coord_x, tab->coord_y);
 		if (tab->co)
 		{
-			next = tab->co;
+			next = tab->link;
 			ft_printf("\033[32m");
 			while (next)
 			{
-				ft_printf(" || Co %3s", next->content);
+				ft_printf(" || Co %3s", next->l_content->content);
 				next = next->next;
 			}
 			ft_printf("\033[0m");

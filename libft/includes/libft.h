@@ -31,6 +31,8 @@ typedef struct		s_list {
 
 	size_t			content_size;
 
+	struct s_list 		*l_content;
+	struct s_list 		*link;
 	struct s_list 		*co;
 	struct s_list			*conext;
 

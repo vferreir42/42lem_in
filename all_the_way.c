@@ -50,7 +50,7 @@ void all_way(t_map *map)
 		{
 			next->next = ft_lstnew(way, 10000);
 			next = next->next;
-			next->size_way = size_of_way(way); 
+			next->size_way = size_of_way(way);
 		}
 		map->all_the_way = all_way;
 	}

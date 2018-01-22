@@ -40,5 +40,6 @@ t_list	*shortest_way(t_map *map);
 void add_position(t_map map);
 void 	add_nbway(t_map map);
 void all_way(t_map *map);
+void create_graph(t_map map);
 
 #endif

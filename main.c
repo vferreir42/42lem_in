@@ -33,6 +33,7 @@ int main(void)
 	t_map map;
 
 	put_read_in_list(&map);
+	create_graph(map);
 	add_position(map);
 	add_nbway(map);
 

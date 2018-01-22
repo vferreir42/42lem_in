@@ -6,71 +6,45 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 14:42:27 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/20 15:09:57 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/01/22 16:47:41 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	next_salle_is_not_gris(t_map map, char *name, char *namebefore)
+void	next_salle(t_map map, t_list *tab, int position)
 {
-	t_list	*tab;
+	t_list	*link;
 
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	tab->gris = 0;
-}
-
-int		next_salle_is_gris(t_map map, char *name)
-{
-	t_list	*tab;
-
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	if (tab->gris != 1)
-		return (1);
-	return (0);
-}
-
-void	next_salle(t_map map, char *name, int position)
-{
-	t_list	*tab;
-	t_list	*sauv;
-
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	sauv = tab->co;
 	if (tab->position > position)
 		tab->position = position;
 	tab->gris = 1;
-	while (sauv)
+	link = tab->link;
+	while (link)
 	{
-		if (next_salle_is_gris(map, sauv->content) == 1)
+		if (link->l_content->gris == 0)
 		{
-			next_salle(map, sauv->content, position + 1);
-			next_salle_is_not_gris(map, sauv->content, tab->content);
+			next_salle(map, link->l_content, position + 1);
+			link->l_content->gris = 0;
 		}
-		sauv = sauv->next;
+		link = link->next;
 	}
 }
 
 void	add_position(t_map map)
 {
-	t_list	*sauv;
+	t_list	*link;
 	t_list	*tab;
 
 	tab = map.tab;
 	while (tab->info_salle != 1)
 		tab = tab->next;
-	sauv = tab->co;
+	link = tab->link;
 	tab->gris = 1;
 	tab->position = 0;
-	while (sauv)
+	while (link)
 	{
-		next_salle(map, sauv->content, 1);
-		sauv = sauv->next;
+		next_salle(map, link->l_content, 1);
+		link = link->next;
 	}
 }

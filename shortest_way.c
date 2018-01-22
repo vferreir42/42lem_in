@@ -12,91 +12,54 @@
 
 #include "lem_in.h"
 
-int		tab_co_position(t_map map, char *name)
+t_list	*best_way(t_map map, t_list *tab, int position)
 {
-	t_list	*tab;
-
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	return (tab->position);
-}
-
-int		tab_co_nbway(t_map map, char *name)
-{
-	t_list	*tab;
-
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	return (tab->nb_way);
-}
-
-int 	next_gris(t_map map, char *name)
-{
-	t_list	*tab;
-
-	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
-		tab = tab->next;
-	if (tab->gris == 0)
-		return (1);
-	else
-		return (0);
-}
-
-char	*best_way(t_map map, t_list *tab)
-{
-	t_list	*tab_co;
-	int position;
-	int position_next;
+	t_list *link;
+	t_list *best;
 	int nb_way;
-	int nb_way_next;
-	char *name;
 
-	tab_co = tab->co;
-	position = tab->position;
-	nb_way = 1000;
-	name = NULL;
-	while (tab_co)
+//	printf("NAME : %s || POSITION : %d\n", tab->content, position);
+	nb_way = tab->nb_way;
+	link = tab->link;
+	best = NULL;
+	while (link)
 	{
-		position_next = tab_co_position(map, tab_co->content);
-		nb_way_next = tab_co_nbway(map, tab_co->content);
-		if (position_next <= position && next_gris(map, tab_co->content) == 1 && nb_way_next <= nb_way)
+//		printf("NAME LINK: %s ||  link nb : %d || link %d\n", link->l_content->content, link->l_content->nb_way, nb_way);
+		if (link->l_content->position <= position && link->l_content->gris == 0
+			&& link->l_content->nb_way >= nb_way)
 		{
-			position = position_next;
-			nb_way = nb_way_next;
-			name = ft_strdup(tab_co->content);
+			position = link->l_content->position;
+			best = link->l_content;
 		}
-		tab_co = tab_co->next;
+		link = link->next;
 	}
-	return (name);
+	if (best && best->info_salle != 1)
+		best->gris = 1;
+	return (best);
 }
 
 t_list	*shortest_way_inverse(t_map map)
 {
-	t_list	*tab;
 	t_list	*way_inverse;
 	t_list	*next;
-	char	*name;
+	t_list	*best;
 
-	tab = map.tab;
-	while (tab->info_salle != 2)
-		tab = tab->next;
-	way_inverse = ft_lstnew(tab->content, 100);
+	best = map.tab;
+	while (best->info_salle != 2)
+		best = best->next;
+	way_inverse = ft_lstnew(best->content, 100);
 	next = way_inverse;
-	while (tab->info_salle != 1)
+	while (best && best->info_salle != 1)
 	{
-		name = best_way(map, tab);
-		if (name == NULL)
+		if (best->info_salle == 2)
+			best->position = 10000;
+		best = best_way(map, best, best->position);
+		if (best == NULL)
 			return (NULL);
-		next->next = ft_lstnew(name, 100);
+//		printf("best content : %s\n", best->content);
+		next->next = ft_lstnew(best->content, 100);
 		next = next->next;
-		tab = map.tab;
-		while (ft_strcmp(tab->content, name) != 0)
-			tab = tab->next;
-		if (tab->info_salle != 1)
-			tab->gris = 1;
+//		printf("\n");
 	}
 	return (way_inverse);
 }
@@ -113,6 +76,8 @@ t_list	*shortest_way(t_map *map)
 	way_inverse = shortest_way_inverse(*map);
 	if (way_inverse == NULL)
 		return (NULL);
+	return (way_inverse);
+	/*
 	sauv = way_inverse;
 	nb = 0;
 	while (way_inverse->next && ++nb)
@@ -130,5 +95,5 @@ t_list	*shortest_way(t_map *map)
 		next->nb_ant = 0;
 		next->name_ant = 0;
 	}
-	return (way);
+	return (way); */
 }
