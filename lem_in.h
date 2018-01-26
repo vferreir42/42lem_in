@@ -22,6 +22,8 @@ typedef struct	s_map
 	t_list *tab;
 	t_list *all_the_way;
 	t_list *way;
+
+	int name_ant;
 	int nb_ant;
 }				t_map;
 
@@ -32,7 +34,6 @@ void extract_information(t_map *map, t_list *read);
 void put_read_in_list(t_map *map);
 char *ft_strchr_before(char *str, char c);
 
-void display(t_list *way, int nb_ant);
 void display_chemin(t_map map);
 void display_list(t_map map);
 

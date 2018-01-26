@@ -12,55 +12,6 @@
 
 #include "lem_in.h"
 
-void display_progression(t_list *sauv)
-{
-	t_list *way;
-
-	way = sauv->next;
-	while (way)
-	{
-		if (way->nb_ant > 0)
-			way->name_ant++;
-		if (way->nb_ant > 0 && way->name_ant > 0)
-			ft_printf("L%d-%s\n", way->name_ant, way->content);
-		way = way->next;
-	}
-	ft_printf("\n");
-}
-
-void display(t_list *way, int nb_ant)
-{
-	t_list *sauv;
-	int sauv_nb_ant;
-	int give;
-
-	sauv = way;
-	sauv_nb_ant = nb_ant;
-	way->nb_ant = nb_ant;
-	while (1)
-	{
-		way = sauv;
-		give = 0;
-		while (way)
-		{
-			if (way->nb_ant - give > 0 && way->next)
-			{
-				way->nb_ant--;
-				give = 1;
-				way->next->nb_ant++;
-			}
-			else
-				give = 0;
-			if (way->nb_ant == sauv_nb_ant)
-				break ;
-			way = way->next;
-		}
-		display_progression(sauv);
-		if (way && way->nb_ant == sauv_nb_ant)
-			break ;
-	}
-}
-
 void display_chemin(t_map map)
 {
 	t_list *all_the_way;
