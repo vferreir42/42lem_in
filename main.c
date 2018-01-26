@@ -32,16 +32,16 @@ int main(void)
 {
 	t_map map;
 
-//	map = malloc(sizeof(t_map));
-
 	put_read_in_list(&map);
 	create_graph(map);
 	add_position(map);
 	add_nbway(map);
 	all_way(&map);
 
+	/*
 	display_list(map);
 	printf("\n");
+	*/
 
 	send_ant_in_way(map);
 

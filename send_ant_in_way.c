@@ -12,31 +12,6 @@
 
 #include "lem_in.h"
 
-void test_tab(t_map map, t_list *way, int *tab, int sauv_i, int name)
-{
-	int i;
-
-	i = 0;
-//	printf("name : %d\n", name);
-	while (++i < sauv_i)
-	{
-//		printf("tab : %d\n", tab[i]);
-		if (tab[i] > 0)
-		{
-			map.way->content = ft_strjoin(map.way->content, "L");
-			map.way->content = ft_strjoin(map.way->content, ft_itoa(name));
-			map.way->content = ft_strjoin(map.way->content, "-");
-			map.way->content = ft_strjoin(map.way->content, way->content);
-			map.way->content = ft_strjoin(map.way->content, " ");
-			printf("L%d-%s\n", name, way->content);
-			name--;
-		}
-		way = way->next;
-	}
-	map.way->content = ft_strjoin(map.way->content, "\n");
-	printf("\n");
-}
-
 int create_tab(t_list *way, int *tab, int nb_ant)
 {
 	int i;
@@ -52,9 +27,34 @@ int create_tab(t_list *way, int *tab, int nb_ant)
 	return (i);
 }
 
-void display(t_map map, t_list *way, int nb_ant, int name)
+void test_tab(t_map *map, t_list *way, int *tab, int sauv_i, int name)
 {
-	int tab[nb_ant];
+	int i;
+
+	i = 0;
+	//printf("name : %d\n", name);
+	while (++i < sauv_i)
+	{
+//		printf("tab : %d\n", tab[i]);
+		if (tab[i] > 0)
+		{
+			map->way->content = ft_strjoin(map->way->content, " L");
+			map->way->content = ft_strjoin(map->way->content, ft_itoa(name));
+			map->way->content = ft_strjoin(map->way->content, "-");
+			map->way->content = ft_strjoin(map->way->content, way->content);
+	//		printf("L%d-%s\n", name, way->content);
+			name--;
+		}
+		way = way->next;
+	}
+//	map->way->content = ft_strjoin(map->way->content, "\n");
+//	printf("\n");
+	map->way = map->way->next;
+}
+
+void display(t_map *map, t_list *way, int nb_ant, int name)
+{
+	int tab[1000];
 	int i;
 	int sauv_i;
 
@@ -71,16 +71,19 @@ void display(t_map map, t_list *way, int nb_ant, int name)
 			}
 		}
 		test_tab(map, way, tab, sauv_i, name + 1);
-		if (name + 1 < nb_ant + map.name_ant)
+		if (name + 1 < nb_ant + map->name_ant)
 			name++;
 	}
 }
 
 int fonction(t_map map, int *size_way)
 {
+	t_list *sauv;
 	int i;
 	int total;
 	int nb_cycle;
+	int name;
+
 
 	total = map.nb_ant;
 	i = -1;
@@ -99,31 +102,38 @@ int fonction(t_map map, int *size_way)
 		size_way[i] += 1;
 
 
-	t_list *sauv;
-	map.way = ft_lstnew("Tour", 5);
+	map.way = ft_lstnew("Tour 0 : ", 8);
 	sauv = map.way;
-
-	printf("%s\n", map.way->content);
-
-	map.name_ant = 0;
-	map.all_the_way->l_content = map.all_the_way->l_content->next;
-	display(map, map.all_the_way->l_content, 5, 0);
-
-	printf("%s\n", map.way->content);
-
-
-	/*
 	i = 0;
+	while (++i < nb_cycle + 1)
+	{
+		map.way->next = ft_lstnew("Tour ", 6);
+		map.way = map.way->next;
+		map.way->content = ft_strjoin(map.way->content, ft_itoa(i));
+		map.way->content = ft_strjoin(map.way->content, " :");
+	}
+	map.way = sauv;
+
+	i = 0;
+	map.name_ant = 0;
 	while (size_way[i] && size_way[i] > 0)
 	{
-		printf("Nb ant envoye %d\n", size_way[i]);
+		map.all_the_way->l_content = map.all_the_way->l_content->next;
+		display(&map, map.all_the_way->l_content, size_way[i], map.name_ant);
+		map.name_ant += size_way[i];
+		map.way = sauv;
 		map.all_the_way = map.all_the_way->next;
 		i++;
 	}
-	printf("\ntotal : %d || nb cycle : %d\n", total, nb_cycle);
-	*/
-	return (0);
 
+
+	map.way = sauv;
+	while (map.way)
+	{
+		ft_printf("%s\n", map.way->content);
+		map.way = map.way->next;
+	}
+	return (0);
 }
 
 void send_ant_in_way(t_map map)
@@ -141,24 +151,5 @@ void send_ant_in_way(t_map map)
 		i++;
 	}
 	size_way[i] ='\0';
-
-	i = 0;
-	while (size_way[i])
-	{
-		printf("Size : %d\n", size_way[i]);
-		i++;
-	}
-	printf("\n");
-
 	fonction(map, size_way);
-
-
-
-
-	/*
-
-
-	map.way = map.all_the_way->l_content;
-	display(map.way, map.nb_ant);
-	*/
 }
