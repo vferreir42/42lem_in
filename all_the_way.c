@@ -17,7 +17,7 @@ int size_of_way(t_list *way)
 	int i;
 	t_list *next;
 
-	i = 0;
+	i = -1;
 	next = way;
 	while (next)
 	{
@@ -42,7 +42,8 @@ void all_way(t_map *map)
 		map->way = way;
 		if (all_way == NULL)
 		{
-			all_way = ft_lstnew(way, 10000);
+			all_way = ft_lstnew(way->content, 10000);
+			all_way->l_content = way;
 			all_way->size_way = size_of_way(way);
 			next = all_way;
 		}
@@ -50,6 +51,7 @@ void all_way(t_map *map)
 		{
 			next->next = ft_lstnew(way, 10000);
 			next = next->next;
+			next->l_content = way;
 			next->size_way = size_of_way(way);
 		}
 		map->all_the_way = all_way;

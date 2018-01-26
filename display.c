@@ -12,11 +12,11 @@
 
 #include "lem_in.h"
 
-void display_progression(t_map map)
+void display_progression(t_list *sauv)
 {
 	t_list *way;
 
-	way = map.way->next;
+	way = sauv->next;
 	while (way)
 	{
 		if (way->nb_ant > 0)
@@ -25,19 +25,21 @@ void display_progression(t_map map)
 			ft_printf("L%d-%s\n", way->name_ant, way->content);
 		way = way->next;
 	}
-//	ft_printf("\n");
+	ft_printf("\n");
 }
 
-void display(t_map map)
+void display(t_list *way, int nb_ant)
 {
-	t_list *way;
+	t_list *sauv;
+	int sauv_nb_ant;
 	int give;
 
-	way = map.way;
-	way->nb_ant = map.nb_ant;
+	sauv = way;
+	sauv_nb_ant = nb_ant;
+	way->nb_ant = nb_ant;
 	while (1)
 	{
-		way = map.way;
+		way = sauv;
 		give = 0;
 		while (way)
 		{
@@ -49,33 +51,33 @@ void display(t_map map)
 			}
 			else
 				give = 0;
-			if (way->nb_ant == map.nb_ant)
+			if (way->nb_ant == sauv_nb_ant)
 				break ;
 			way = way->next;
 		}
-		display_progression(map);
-		if (way && way->nb_ant == map.nb_ant)
+		display_progression(sauv);
+		if (way && way->nb_ant == sauv_nb_ant)
 			break ;
 	}
 }
 
 void display_chemin(t_map map)
 {
-	t_list *all_way;
+	t_list *all_the_way;
 	t_list *way;
 
-	all_way = map.all_the_way;
-	while (all_way)
+	all_the_way = map.all_the_way;
+	while (all_the_way)
 	{
-		printf("SIZE WAY = %d\n", all_way->size_way);
-		way = all_way->content;
+		printf("Size of way : %d\n", all_the_way->size_way);
+		way = all_the_way->l_content;
 		while (way)
 		{
-			printf(" %-2s-->", way->content);
+			printf("%s --> ", way->content);
 			way = way->next;
 		}
-		printf("\n");
-		all_way = all_way->next;
+	printf("\n");
+	all_the_way = all_the_way->next;
 	}
 }
 

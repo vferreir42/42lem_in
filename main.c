@@ -36,10 +36,11 @@ int main(void)
 	create_graph(map);
 	add_position(map);
 	add_nbway(map);
-
-
 	all_way(&map);
+
 	display_list(map);
+
+	send_ant_in_way(map);
 
 	return (0);
 }

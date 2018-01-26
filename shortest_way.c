@@ -76,8 +76,6 @@ t_list	*shortest_way(t_map *map)
 	way_inverse = shortest_way_inverse(*map);
 	if (way_inverse == NULL)
 		return (NULL);
-	return (way_inverse);
-	/*
 	sauv = way_inverse;
 	nb = 0;
 	while (way_inverse->next && ++nb)
@@ -95,5 +93,5 @@ t_list	*shortest_way(t_map *map)
 		next->nb_ant = 0;
 		next->name_ant = 0;
 	}
-	return (way); */
+	return (way);
 }

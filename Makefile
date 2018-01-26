@@ -19,6 +19,7 @@ SRCS	=	main.c				\
 				number_way.c			\
 				shortest_way.c		\
 				all_the_way.c		\
+				send_ant_in_way.c	\
 				display.c			\
 				./get_next_line/get_next_line.c
 
