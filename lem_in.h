@@ -13,6 +13,8 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+# define WRONG 0
+
 # include "libft.h"
 # include "get_next_line.h"
 # include <stdio.h>
@@ -22,17 +24,22 @@ typedef struct	s_map
 	t_list *tab;
 	t_list *all_the_way;
 	t_list *way;
+	t_list *print;
+	t_list *read;
 
 	int name_ant;
 	int nb_ant;
+	int nb_start;
+	int nb_end;
 }				t_map;
 
 int				ft_printf(const char *format, ...);
 
-void put_connexion_in_tab(t_list *tab, char **connexion);
-void extract_information(t_map *map, t_list *read);
-void put_read_in_list(t_map *map);
-char *ft_strchr_before(char *str, char c);
+void	read_info(t_map *map);
+
+void  parcing_name_salle(t_map *map, t_list *info);
+
+
 
 void display_chemin(t_map map);
 void display_list(t_map map);
@@ -44,5 +51,6 @@ void all_way(t_map *map);
 void create_graph(t_map map);
 
 void send_ant_in_way(t_map map);
+void display_way(t_map *map, t_list *way, int nb_ant, int name);
 
 #endif

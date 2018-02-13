@@ -14,12 +14,14 @@ NAME	=	lem-in
 
 SRCS	=	main.c				\
 				read.c				\
+				parcing.c			\
 				created_graph.c	\
 				position_salle.c	\
 				number_way.c			\
 				shortest_way.c		\
 				all_the_way.c		\
 				send_ant_in_way.c	\
+				display_way.c		\
 				display.c			\
 				./get_next_line/get_next_line.c
 
@@ -38,7 +40,7 @@ all	:	$(NAME)
 $(NAME)	:	$(OBJS)
 	@$(CC) $(OBJS) $(LIB_PATH) -o $(NAME)
 	@$(RM) $(OBJS)
-	@echo "\033[32mCHECKER COMPILATING DONE\033[0m"
+	@echo "\033[32mLEM_IN COMPILATING DONE\033[0m"
 
 clean	:
 	$(RM) $(OBJS)
@@ -46,7 +48,7 @@ clean	:
 fclean	:
 	@$(RM) $(OBJS)
 	@$(RM) $(NAME)
-	@echo "\033[31mCHECKER CLEANING DONE\033[0m"
+	@echo "\033[31mLEM_IN CLEANING DONE\033[0m"
 
 re	:	fclean all
 

@@ -42,7 +42,7 @@ void display_list(t_map map)
 	while (tab)
 	{
 		ft_printf("\033[33mNom : %3s\033[0m || %d", tab->content, tab->info_salle);
-		ft_printf(" || Pos : %3d || Nb_way : %3d || Gris %d", tab->position, tab->nb_way, tab->gris);
+		ft_printf(" || Pos : %5d || Nb_way : %3d || Gris %d", tab->position, tab->nb_way, tab->gris);
 	//	printf(" || X : %s || Y : %s", tab->coord_x, tab->coord_y);
 		if (tab->co)
 		{

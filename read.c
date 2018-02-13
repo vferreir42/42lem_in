@@ -1,127 +1,197 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   new.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/19 16:51:57 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/19 16:57:42 by vferreir         ###   ########.fr       */
+/*   Created: 2018/02/13 15:46:52 by vferreir          #+#    #+#             */
+/*   Updated: 2018/02/13 15:46:54 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	put_connexion_in_tab(t_list *tab, char **connexion)
+int    partie_nb_ant(char *line)
 {
-	int		i;
-	t_list	*sauv;
-	t_list	*next;
+  int i;
 
-	sauv = tab;
-	i = 0;
-	while (connexion[i])
-	{
-		tab = sauv;
-		while (ft_strcmp(tab->content, ft_strchr_before(connexion[i], '-')) != 0)
-			tab = tab->next;
-		if (tab->co == NULL)
-		{
-			tab->co = ft_lstnew(ft_strchr(connexion[i], '-') + 1, 50);
-			tab->conext = tab->co;
-		}
-		else
-		{
-			tab->conext->next = ft_lstnew(ft_strchr(connexion[i], '-') + 1, 50);
-			tab->conext = tab->conext->next;
-		}
-		tab = sauv;
-		while (ft_strcmp(tab->content, ft_strchr(connexion[i], '-') + 1) != 0)
-			tab = tab->next;
-		if (tab->co == NULL)
-		{
-			tab->co = ft_lstnew(ft_strchr_before(connexion[i], '-'), 50);
-			tab->conext = tab->co;
-		}
-		else
-		{
-			tab->conext->next = ft_lstnew(ft_strchr_before(connexion[i], '-'), 50);
-			tab->conext = tab->conext->next;
-		}
-		i++;
-	}
+  i = 0;
+  while (line[i])
+  {
+    if (ft_isdigit(line[i]) == 0)
+      return (0);
+    i++;
+  }
+  return (1);
 }
 
-t_list 	*reduce_extract_information(t_map *map, t_list *read, t_list *next)
+int extract_name(t_map *map, char *line, int type_salle)
 {
-	next->next = ft_lstnew(ft_strchr_before(read->content, ' '), ft_strlen(read->content) * 8);
-	next = next->next;
-	next->coord_x = ft_strchr_before(ft_strchr(read->content, ' ') + 1, ' ');
-	next->coord_y = ft_strrchr(read->content, ' ');
-	next->info_salle = 0;
-	next->co = NULL;
-	next->gris = 0;
-	next->nb_way = 0;
-	next->position = 10000;
-	return (next);
+  int i;
+  char **tab;
+  static t_list *next;
+  t_list *begin;
+
+  tab = ft_strsplit(line, ' ');
+
+  // parsing 3 colonnes
+  i = -1;
+  while (tab[++i])
+    ;
+  if (i != 3)
+    return (WRONG);
+
+  // parsing pas de salle du meme nom existante deja
+  begin = map->tab;
+  while (begin)
+  {
+    if (ft_strcmp(begin->content, tab[0]) == 0)
+      return (WRONG);
+    begin = begin->next;
+  }
+
+  // ajout de l'information
+  if (map->tab)
+  {
+    next->next = ft_lstnew(tab[0], ft_strlen(tab[0]) * 8);
+    next = next->next;
+  }
+  else
+  {
+    map->tab = ft_lstnew(tab[0], ft_strlen(tab[0]) * 8);
+    next = map->tab;
+  }
+  next->info_salle = type_salle;
+  if (type_salle == 1)
+    next->nb_way = 1;
+  next->co = NULL;
+  next->gris = 0;
+  next->nb_way = 0;
+  next->position = 99999;
+  return (1);
 }
 
-void	extract_information(t_map *map, t_list *read)
+int extract_connexion(t_map *map, char *line)
 {
-	char	**connexion;
-	t_list	*tab;
-	t_list	*next;
-	int		i;
+  t_list *next;
+  t_list *nxt;
+  int i;
+  char **tab;
 
-	tab = ft_lstnew("0", 16);
-	next = tab;
-	i = 0;
-	connexion = malloc(sizeof(char *) * 1000);
-	while (read)
-	{
-		if (ft_strcmp(read->content, "##start") == 0)
-		{
-			read = read->next;
-			next = reduce_extract_information(map, read, next);
-			next->info_salle = 1;
-			next->nb_way = 1;
-		}
-		else if (ft_strcmp(read->content, "##end") == 0)
-		{
-			read = read->next;
-			next = reduce_extract_information(map, read, next);
-			next->info_salle = 2;
-		}
-		else if (ft_strchr(read->content, '-') != NULL)
-		{
-			connexion[i] = ft_strdup(read->content);
-			i++;
-		}
-		else
-			next = reduce_extract_information(map, read, next);
-		read = read->next;
-	}
-	connexion[i] = NULL;
-	tab = tab->next;
-	put_connexion_in_tab(tab, connexion);
-	map->tab = tab;
+  tab = ft_strsplit(line, '-');
+  i = -1;
+  while (tab[++i])
+    ;
+  if (i != 2)
+    return (WRONG);
+  next = map->tab;
+  while (next && ft_strcmp(next->content, tab[0]) != 0)
+    next = next->next;
+  if (next == NULL)
+    return (WRONG);
+  if (next->co == NULL)
+    next->co = ft_lstnew(tab[1], ft_strlen(next->content) * 8);
+  else
+  {
+    nxt = next->co;
+    while (nxt->next)
+      nxt = nxt->next;
+    nxt->next = ft_lstnew(tab[1], ft_strlen(next->content) * 8);
+  }
+
+  // Pareil mais en inversant num dans tab
+  next = map->tab;
+  while (next && ft_strcmp(next->content, tab[1]) != 0)
+    next = next->next;
+  if (next == NULL)
+    return (WRONG);
+  if (next->co == NULL)
+    next->co = ft_lstnew(tab[0], ft_strlen(next->content) * 8);
+  else
+  {
+    nxt = next->co;
+    while (nxt->next)
+      nxt = nxt->next;
+    nxt->next = ft_lstnew(tab[0], ft_strlen(next->content) * 8);
+  }
+  return (1);
 }
 
-void	put_read_in_list(t_map *map)
+void	read_info(t_map *map)
 {
-	t_list	*read;
-	t_list	*next;
-	char	*line;
+  char *line;
+  int type_salle;
 
-	get_next_line(0, &line);
-	read = ft_lstnew(line, ft_strlen(line) * 8);
-	next = read;
-	while (get_next_line(0, &line) > 0)
-	{
-		next->next = ft_lstnew(line, ft_strlen(line) * 8);
-		next = next->next;
-	}
-	map->nb_ant = ft_atoi(read->content);
-	read = read->next;
-	extract_information(map, read);
+  map->nb_start = 0;
+  map->nb_end = 0;
+  map->nb_ant = -1;
+  map->tab = NULL;
+  type_salle = 0;
+  while (get_next_line(0, &line) > 0)
+  {
+    // Check if is number nb_ant
+    if (partie_nb_ant(line) == 1)
+    {
+      if (map->nb_ant == -1)
+        map->nb_ant = ft_atoi(line);
+      else
+      {
+        printf("Stop dans nb fourmi\n");
+        return ;
+      }
+    }
+    //comment
+    else if (ft_strncmp(line, "##", 2) == 0)
+    {
+      if (ft_strcmp(line, "##start") == 0)
+      {
+        type_salle = 1;
+        map->nb_start++;
+        if (map->nb_start != 1)
+        {
+          printf("Stop start\n");
+          return ;
+        }
+      }
+      if (ft_strcmp(line, "##end") == 0)
+      {
+        type_salle = 2;
+        map->nb_end++;
+        if (map->nb_end != 1)
+        {
+          printf("Stop end\n");
+          return ;
+        }
+      }
+    }
+    // Extract name salle
+    else if (ft_strchr(line, '-') == NULL)
+    {
+      if (extract_name(map, line, type_salle) == WRONG)
+      {
+        printf("Stop dans salle\n");
+        return ;
+      }
+      type_salle = 0;
+    }
+    else
+    {
+      if (extract_connexion(map, line) == WRONG)
+      {
+        printf("Stop dans connexion\n");
+        return ;
+      }
+      break ;
+    }
+  }
+  // Extract connexion
+  while (get_next_line(0, &line) > 0)
+  {
+    if (extract_connexion(map, line) == 0)
+    {
+      printf("Stop dans connexion\n");
+      return ;
+    }
+  }
 }

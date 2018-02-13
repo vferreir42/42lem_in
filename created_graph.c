@@ -29,6 +29,7 @@ void create_graph(t_map map)
 	t_list *tab;
 	t_list *tab_co;
 
+	link = NULL;
 	tab = map.tab;
 	while (tab)
 	{

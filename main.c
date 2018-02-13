@@ -32,18 +32,27 @@ int main(void)
 {
 	t_map map;
 
-	put_read_in_list(&map);
-	create_graph(map);
-	add_position(map);
-	add_nbway(map);
-	all_way(&map);
 
-	/*
+	read_info(&map);
+	printf("READ OK\n");
+	create_graph(map);
+	printf("CREATE GRAPH OK\n");
+	add_position(map);
+	printf("ADD POSITION OK\n");
+	add_nbway(map);
+	printf("ADD NB WAY OK\n");
+	all_way(&map);
+	printf("FIND ALL WAY OK\n");
 	display_list(map);
 	printf("\n");
-	*/
+
+
+	if (map.all_the_way == NULL)
+	{
+		printf("Error\n");
+		return (0);
+	}
 
 	send_ant_in_way(map);
-
 	return (0);
 }
