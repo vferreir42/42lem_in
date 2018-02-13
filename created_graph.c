@@ -38,13 +38,13 @@ void create_graph(t_map map)
 		{
 			if (link == NULL)
 			{
-				link = ft_lstnew(tab_co->content, 100);
+				link = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
 				link->l_content = renvoie_list(map, tab_co->content);
 				next = link;
 			}
 			else
 			{
-				next->next = ft_lstnew(tab_co->content, 100);
+				next->next = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
 				next = next->next;
 				next->l_content = renvoie_list(map, tab_co->content);
 			}

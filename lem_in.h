@@ -31,13 +31,14 @@ typedef struct	s_map
 	int nb_ant;
 	int nb_start;
 	int nb_end;
+	int nb_total;
 }				t_map;
 
 int				ft_printf(const char *format, ...);
 
 void	read_info(t_map *map);
 
-void  parcing_name_salle(t_map *map, t_list *info);
+void  parsing(t_map map);
 
 
 

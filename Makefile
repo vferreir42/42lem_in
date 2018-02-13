@@ -14,7 +14,7 @@ NAME	=	lem-in
 
 SRCS	=	main.c				\
 				read.c				\
-				parcing.c			\
+				parsing.c			\
 				created_graph.c	\
 				position_salle.c	\
 				number_way.c			\

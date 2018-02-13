@@ -12,31 +12,18 @@
 
 #include "lem_in.h"
 
-void  parcing_name_salle(t_map *map, t_list *info)
+void quit(void)
 {
-  t_list *begin;
+  write (1, "Error\n", 6);
+  exit (0);
+}
 
-  begin = map->tab->next;
-//  printf("\nnext %s\n", info->content);
+void parsing(t_map map)
+{
+  t_list *list;
 
-  while (begin->next)
-  {
-  //  printf("%s\n", begin->content);
-    if (ft_strcmp(begin->content, info->content) == 0)
-    {
-      printf("ERROR\n");
-      exit (0);
-    }
-    if (info->info_salle == 1 && begin->info_salle == 1)
-    {
-      printf("ERROR\n");
-      exit (0);
-    }
-    if (info->info_salle == 2 && begin->info_salle == 2)
-    {
-      printf("ERROR\n");
-      exit (0);
-    }
-    begin = begin->next;
-  }
+  if (map.nb_ant <= 0)
+    quit();
+  if (map.nb_start != 1 || map.nb_end != 1 || map.nb_total != 3)
+    quit();
 }

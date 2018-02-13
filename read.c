@@ -65,6 +65,7 @@ int extract_name(t_map *map, char *line, int type_salle)
   next->info_salle = type_salle;
   if (type_salle == 1)
     next->nb_way = 1;
+  map->nb_total += type_salle;
   next->co = NULL;
   next->gris = 0;
   next->nb_way = 0;
@@ -85,6 +86,7 @@ int extract_connexion(t_map *map, char *line)
     ;
   if (i != 2)
     return (WRONG);
+
   next = map->tab;
   while (next && ft_strcmp(next->content, tab[0]) != 0)
     next = next->next;
@@ -107,7 +109,9 @@ int extract_connexion(t_map *map, char *line)
   if (next == NULL)
     return (WRONG);
   if (next->co == NULL)
-    next->co = ft_lstnew(tab[0], ft_strlen(next->content) * 8);
+  {
+    next->co = ft_lstnew(tab[0], ft_strlen(next->content) * 120);
+  }
   else
   {
     nxt = next->co;
@@ -125,6 +129,7 @@ void	read_info(t_map *map)
 
   map->nb_start = 0;
   map->nb_end = 0;
+  map->nb_total = 0;
   map->nb_ant = -1;
   map->tab = NULL;
   type_salle = 0;
@@ -137,12 +142,12 @@ void	read_info(t_map *map)
         map->nb_ant = ft_atoi(line);
       else
       {
-        printf("Stop dans nb fourmi\n");
+  //      printf("Stop dans nb fourmi\n");
         return ;
       }
     }
     //comment
-    else if (ft_strncmp(line, "##", 2) == 0)
+    else if (ft_strncmp(line, "#", 1) == 0)
     {
       if (ft_strcmp(line, "##start") == 0)
       {
@@ -150,19 +155,24 @@ void	read_info(t_map *map)
         map->nb_start++;
         if (map->nb_start != 1)
         {
-          printf("Stop start\n");
+  //        printf("Stop start\n");
           return ;
         }
       }
-      if (ft_strcmp(line, "##end") == 0)
+      else if (ft_strcmp(line, "##end") == 0)
       {
         type_salle = 2;
         map->nb_end++;
         if (map->nb_end != 1)
         {
-          printf("Stop end\n");
+  //        printf("Stop end\n");
           return ;
         }
+      }
+      else if (type_salle != 0)
+      {
+  //      printf("Stop bad comment\n");
+        return ;
       }
     }
     // Extract name salle
@@ -170,7 +180,7 @@ void	read_info(t_map *map)
     {
       if (extract_name(map, line, type_salle) == WRONG)
       {
-        printf("Stop dans salle\n");
+  //      printf("Stop dans salle\n");
         return ;
       }
       type_salle = 0;
@@ -179,7 +189,7 @@ void	read_info(t_map *map)
     {
       if (extract_connexion(map, line) == WRONG)
       {
-        printf("Stop dans connexion\n");
+  //      printf("Stop dans connexion\n");
         return ;
       }
       break ;
@@ -190,7 +200,7 @@ void	read_info(t_map *map)
   {
     if (extract_connexion(map, line) == 0)
     {
-      printf("Stop dans connexion\n");
+  //    printf("Stop dans connexion\n");
       return ;
     }
   }
