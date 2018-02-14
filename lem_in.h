@@ -27,6 +27,7 @@ typedef struct	s_map
 	t_list *print;
 	t_list *read;
 
+	int type_salle;
 	int name_ant;
 	int nb_ant;
 	int nb_start;
@@ -37,10 +38,10 @@ typedef struct	s_map
 int				ft_printf(const char *format, ...);
 
 void	read_info(t_map *map);
+int extract_name(t_map *map, char *line);
+int gestion_connexion(t_map *map, char *line);
 
-void  parsing(t_map map);
-
-
+void  parsing(t_map *map);
 
 void display_chemin(t_map map);
 void display_list(t_map map);

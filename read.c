@@ -26,208 +26,63 @@ int    partie_nb_ant(char *line)
   return (1);
 }
 
-int extract_name(t_map *map, char *line, int type_salle)
+int gestion_comment(t_map *map, char *line)
 {
-  int i;
-  char **tab;
-  static t_list *next;
-  t_list *begin;
-
-  tab = ft_strsplit(line, ' ');
-
-  // parsing 3 colonnes
-  i = -1;
-  while (tab[++i])
-    ;
-  if (i != 3)
-    return (WRONG);
-
-  // parsing pas de salle du meme nom existante deja
-  begin = map->tab;
-  while (begin)
+  if (ft_strcmp(line, "##start") == 0)
   {
-    if (ft_strcmp(begin->content, tab[0]) == 0)
+    map->type_salle = 1;
+    map->nb_start++;
+    if (map->nb_start != 1)
       return (WRONG);
-    begin = begin->next;
   }
-
-  // ajout de l'information
-  if (map->tab)
+  else if (ft_strcmp(line, "##end") == 0)
   {
-    next->next = ft_lstnew(tab[0], ft_strlen(tab[0]) * 8);
-    next = next->next;
+    map->type_salle = 2;
+    map->nb_end++;
+    if (map->nb_end != 1)
+      return (WRONG);
   }
-  else
-  {
-    map->tab = ft_lstnew(tab[0], ft_strlen(tab[0]) * 8);
-    next = map->tab;
-  }
-  next->info_salle = type_salle;
-  if (type_salle == 1)
-    next->nb_way = 1;
-  map->nb_total += type_salle;
-  next->co = NULL;
-  next->gris = 0;
-  next->nb_way = 0;
-  next->position = -1;
+  else if (map->type_salle != 0)
+    return (WRONG);
   return (1);
 }
 
-int verif_other_exist(t_map *map, char *line)
+void set_variable_read(t_map *map)
 {
-  t_list *next;
-
-  next = map->tab;
-  while (next && ft_strcmp(next->content, line) != 0)
-    next = next->next;
-  if (!next)
-    return (WRONG);
-  else
-    return (1);
-}
-
-int extract_connexion(t_map *map, char *line)
-{
-  t_list *next;
-  t_list *nxt;
-  int i;
-  char **tab;
-
-  tab = ft_strsplit(line, '-');
-  i = -1;
-  while (tab[++i])
-    ;
-  if (i != 2)
-    return (WRONG);
-
-  printf("-->1\n");
-
-  next = map->tab;
-  while (next && ft_strcmp(next->content, tab[0]) != 0)
-    next = next->next;
-  printf("-->1-->1\n");
-  if (next == NULL)
-    return (WRONG);
-  if (verif_other_exist(map, tab[1]) == WRONG)
-    return (WRONG);
-  printf("-->1-->2\n");
-  if (next->co == NULL)
-  {
-    printf("-->1--3-->if\n");
-    next->co = ft_lstnew(tab[1], ft_strlen(tab[0]));
-  }
-  else
-  {
-    nxt = next->co;
-    while (nxt->next)
-      nxt = nxt->next;
-    nxt->next = ft_lstnew(tab[1], ft_strlen(tab[0]));
-  }
-
-  // Pareil mais en inversant num dans tab
-  next = map->tab;
-  while (next && ft_strcmp(next->content, tab[1]) != 0)
-    next = next->next;
-  if (next == NULL)
-    return (WRONG);
-  if (verif_other_exist(map, tab[1]) == WRONG)
-    return (WRONG);
-  if (next->co == NULL)
-  {
-    next->co = ft_lstnew(tab[0], ft_strlen(tab[0]));
-  }
-  else
-  {
-    nxt = next->co;
-    while (nxt->next)
-      nxt = nxt->next;
-    nxt->next = ft_lstnew(tab[0], ft_strlen(tab[0]));
-  }
-  return (1);
-}
-
-void	read_info(t_map *map)
-{
-  char *line;
-  int type_salle;
-
+  map->type_salle = 0;
   map->nb_start = 0;
   map->nb_end = 0;
   map->nb_total = 0;
   map->nb_ant = -1;
   map->tab = NULL;
-  type_salle = 0;
+}
+
+void	read_info(t_map *map)
+{
+  char *line;
+
+  set_variable_read(map);
   while (get_next_line(0, &line) > 0)
   {
-    printf("%s\n", line);
-    // Check if is number nb_ant
     if (partie_nb_ant(line) == 1)
-    {
       if (map->nb_ant == -1)
         map->nb_ant = ft_atoi(line);
       else
-      {
-  //      printf("Stop dans nb fourmi\n");
         return ;
-      }
-    }
-    //comment
     else if (ft_strncmp(line, "#", 1) == 0)
     {
-      if (ft_strcmp(line, "##start") == 0)
-      {
-        type_salle = 1;
-        map->nb_start++;
-        if (map->nb_start != 1)
-        {
-  //        printf("Stop start\n");
-          return ;
-        }
-      }
-      else if (ft_strcmp(line, "##end") == 0)
-      {
-        type_salle = 2;
-        map->nb_end++;
-        if (map->nb_end != 1)
-        {
-  //        printf("Stop end\n");
-          return ;
-        }
-      }
-      else if (type_salle != 0)
-      {
-  //      printf("Stop bad comment\n");
+      if (gestion_comment(map, line) == WRONG)
         return ;
-      }
     }
-    // Extract name salle
     else if (ft_strchr(line, '-') == NULL)
     {
-      if (extract_name(map, line, type_salle) == WRONG)
-      {
-  //      printf("Stop dans salle\n");
+      if (extract_name(map, line) == WRONG)
         return ;
-      }
-      type_salle = 0;
     }
     else
-    {
-      if (extract_connexion(map, line) == WRONG)
-      {
-  //      printf("Stop dans connexion\n");
-        return ;
-      }
       break ;
-    }
+    free(line);
   }
-  // Extract connexion
-  while (get_next_line(0, &line) > 0)
-  {
-    printf("%s\n", line);
-    if (extract_connexion(map, line) == 0)
-    {
-  //    printf("Stop dans connexion\n");
-      return ;
-    }
-  }
+  if (gestion_connexion(map, line) == WRONG)
+    return ;
 }

@@ -39,9 +39,9 @@ int main(void)
 	t_map map;
 
 	read_info(&map);
-	printf("READ OK\n");
-	parsing(map);
-	printf("PARSING OK\n");
+//	printf("READ OK\n");
+	parsing(&map);
+//	printf("PARSING OK\n");
 	/*
 	while (map.tab)
 	{

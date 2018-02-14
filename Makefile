@@ -12,18 +12,20 @@
 
 NAME	=	lem-in
 
-SRCS	=	main.c				\
-				set_variable.c	\
-				read.c				\
-				parsing.c			\
-				created_graph.c	\
-				position_salle.c	\
-				number_way.c			\
-				shortest_way.c		\
-				all_the_way.c		\
-				send_ant_in_way.c	\
-				display_way.c		\
-				display.c			\
+SRCS	=	main.c									\
+					read.c								\
+						extract_name.c			\
+						extract_connexion.c	\
+					set_variable.c				\
+					parsing.c							\
+					created_graph.c				\
+					position_salle.c			\
+					number_way.c					\
+					shortest_way.c				\
+					all_the_way.c					\
+					send_ant_in_way.c			\
+					display_way.c					\
+					display.c							\
 				./get_next_line/get_next_line.c
 
 OBJS	=	$(SRCS:.c=.o)

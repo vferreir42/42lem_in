@@ -29,28 +29,30 @@ void create_graph(t_map map)
 	t_list *link;
 	t_list *next;
 	t_list *tab;
-	t_list *tab_co;
+	t_list *sauv;
 
 	link = NULL;
 	tab = map.tab;
 	while (tab)
 	{
-		tab_co = tab->co;
-		while (tab_co)
+		while (tab->co)
 		{
 			if (link == NULL)
 			{
-				link = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
-				link->l_content = renvoie_list(map, tab_co->content);
+				link = ft_lstnew(tab->co->content, ft_strlen(tab->co->content) * 120);
+				link->l_content = renvoie_list(map, tab->co->content);
 				next = link;
 			}
 			else
 			{
-				next->next = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
+				next->next = ft_lstnew(tab->co->content, ft_strlen(tab->co->content) * 120);
 				next = next->next;
-				next->l_content = renvoie_list(map, tab_co->content);
+				next->l_content = renvoie_list(map, tab->co->content);
 			}
-			tab_co = tab_co->next;
+			sauv = tab->co;
+			free(tab->co->content);
+			tab->co = tab->co->next;
+			free(sauv);
 		}
 		tab->link = link;
 		link = NULL;
