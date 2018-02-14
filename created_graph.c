@@ -17,8 +17,10 @@ t_list *renvoie_list(t_map map, char *name)
 	t_list	*tab;
 
 	tab = map.tab;
-	while (ft_strcmp(tab->content, name) != 0)
+	while (tab && ft_strcmp(tab->content, name) != 0)
 		tab = tab->next;
+	if (tab == NULL)
+		exit (0);
 	return (tab);
 }
 

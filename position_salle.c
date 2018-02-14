@@ -16,17 +16,18 @@ void	next_salle(t_map map, t_list *tab, int position)
 {
 	t_list	*link;
 
-	if (tab->position > position)
+//	printf("Salle : %3s || Pos salle : %d || pos %d\n", tab->content, tab->position, position);
+	if (tab->position == -1)
 		tab->position = position;
-	tab->gris = 1;
+	else if (position < tab->position)
+		tab->position = position;
 	link = tab->link;
 	while (link)
 	{
-		if (link->l_content->gris == 0)
-		{
+		if (link->l_content->position == -1)
 			next_salle(map, link->l_content, position + 1);
-			link->l_content->gris = 0;
-		}
+		else if (link->l_content->position > position + 1)
+			next_salle(map, link->l_content, position + 1);
 		link = link->next;
 	}
 }
@@ -42,6 +43,7 @@ void	add_position(t_map map)
 	link = tab->link;
 	tab->gris = 1;
 	tab->position = 0;
+
 	while (link)
 	{
 		next_salle(map, link->l_content, 1);

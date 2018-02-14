@@ -69,8 +69,21 @@ int extract_name(t_map *map, char *line, int type_salle)
   next->co = NULL;
   next->gris = 0;
   next->nb_way = 0;
-  next->position = 99999;
+  next->position = -1;
   return (1);
+}
+
+int verif_other_exist(t_map *map, char *line)
+{
+  t_list *next;
+
+  next = map->tab;
+  while (next && ft_strcmp(next->content, line) != 0)
+    next = next->next;
+  if (!next)
+    return (WRONG);
+  else
+    return (1);
 }
 
 int extract_connexion(t_map *map, char *line)
@@ -87,19 +100,28 @@ int extract_connexion(t_map *map, char *line)
   if (i != 2)
     return (WRONG);
 
+  printf("-->1\n");
+
   next = map->tab;
   while (next && ft_strcmp(next->content, tab[0]) != 0)
     next = next->next;
+  printf("-->1-->1\n");
   if (next == NULL)
     return (WRONG);
+  if (verif_other_exist(map, tab[1]) == WRONG)
+    return (WRONG);
+  printf("-->1-->2\n");
   if (next->co == NULL)
-    next->co = ft_lstnew(tab[1], ft_strlen(next->content) * 8);
+  {
+    printf("-->1--3-->if\n");
+    next->co = ft_lstnew(tab[1], ft_strlen(tab[0]));
+  }
   else
   {
     nxt = next->co;
     while (nxt->next)
       nxt = nxt->next;
-    nxt->next = ft_lstnew(tab[1], ft_strlen(next->content) * 8);
+    nxt->next = ft_lstnew(tab[1], ft_strlen(tab[0]));
   }
 
   // Pareil mais en inversant num dans tab
@@ -108,16 +130,18 @@ int extract_connexion(t_map *map, char *line)
     next = next->next;
   if (next == NULL)
     return (WRONG);
+  if (verif_other_exist(map, tab[1]) == WRONG)
+    return (WRONG);
   if (next->co == NULL)
   {
-    next->co = ft_lstnew(tab[0], ft_strlen(next->content) * 120);
+    next->co = ft_lstnew(tab[0], ft_strlen(tab[0]));
   }
   else
   {
     nxt = next->co;
     while (nxt->next)
       nxt = nxt->next;
-    nxt->next = ft_lstnew(tab[0], ft_strlen(next->content) * 8);
+    nxt->next = ft_lstnew(tab[0], ft_strlen(tab[0]));
   }
   return (1);
 }
@@ -135,6 +159,7 @@ void	read_info(t_map *map)
   type_salle = 0;
   while (get_next_line(0, &line) > 0)
   {
+    printf("%s\n", line);
     // Check if is number nb_ant
     if (partie_nb_ant(line) == 1)
     {
@@ -198,6 +223,7 @@ void	read_info(t_map *map)
   // Extract connexion
   while (get_next_line(0, &line) > 0)
   {
+    printf("%s\n", line);
     if (extract_connexion(map, line) == 0)
     {
   //    printf("Stop dans connexion\n");

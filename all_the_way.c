@@ -33,6 +33,7 @@ void all_way(t_map *map)
 	t_list *all_way;
 	t_list *next;
 
+	map->all_the_way = NULL;
 	all_way = NULL;
 	while (1)
 	{

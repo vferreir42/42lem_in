@@ -17,17 +17,15 @@ void	suite(t_map map, int *send_ant, int nb_cycle)
 	t_list *next;
 	int		i;
 
-	map.print = ft_lstnew("Tour 0 : ", 8);
+	map.print = ft_lstnew("Tour :", 8);
 	next = map.print;
 
 
 	i = 0;
 	while (++i < nb_cycle + 1)
 	{
-		next->next = ft_lstnew("Tour ", 6);
+		next->next = ft_lstnew("Tour :", 6);
 		next = next->next;
-		next->content = ft_strjoin(next->content, ft_itoa(i));
-		next->content = ft_strjoin(next->content, " :");
 	}
 
 	next = map.print;
@@ -46,7 +44,8 @@ void	suite(t_map map, int *send_ant, int nb_cycle)
 	next = map.print;
 	while (next)
 	{
-		ft_printf("%s\n", next->content);
+		if (ft_strcmp(next->content, "Tour :") != 0)
+			ft_printf("%s\n", next->content + 7);
 		next = next->next;
 	}
 }

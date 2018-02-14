@@ -42,7 +42,7 @@ void display_list(t_map map)
 	while (tab)
 	{
 		ft_printf("\033[33mNom : %3s\033[0m || %d", tab->content, tab->info_salle);
-		ft_printf(" || Pos : %5d || Nb_way : %5d || Gris %d", tab->position, tab->nb_way, tab->gris);
+		ft_printf(" || Pos : %5d || Nb_way : %1d || Gris %d", tab->position, tab->nb_way, tab->gris);
 	//	printf(" || X : %s || Y : %s", tab->coord_x, tab->coord_y);
 		if (tab->co)
 		{
@@ -50,7 +50,7 @@ void display_list(t_map map)
 			ft_printf("\033[32m");
 			while (next)
 			{
-				ft_printf(" ||%3s", next->l_content->content);
+				ft_printf("||%3s", next->l_content->content);
 				next = next->next;
 			}
 			ft_printf("\033[0m");
@@ -60,6 +60,6 @@ void display_list(t_map map)
 		tab = tab->next;
 	}
 	ft_printf("\n");
-	display_chemin(map);
+//	display_chemin(map);
 
 }

@@ -13,6 +13,7 @@
 NAME	=	lem-in
 
 SRCS	=	main.c				\
+				set_variable.c	\
 				read.c				\
 				parsing.c			\
 				created_graph.c	\
