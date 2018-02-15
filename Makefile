@@ -30,7 +30,7 @@ SRCS	=	main.c									\
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@gcc -g3 -fsanitize=address
+CC	=	@gcc
 
 CFLAGS	=	-I ./libft/includes -I ./get_next_line
 

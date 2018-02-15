@@ -6,7 +6,7 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 19:37:46 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/17 18:12:03 by vferreir         ###   ########.fr       */
+/*   Updated: 2017/12/12 14:36:57 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 
 static int			restexist(char **line, char **rest)
 {
+	char *temp;
+
 	if (*rest != NULL)
 	{
 		if (ft_strchr(*rest, '\n') != NULL)
 		{
 			*line = ft_strdup(*rest);
 			ft_bzero(ft_strchr(*line, '\n'), ft_strlen(ft_strchr(*line, '\n')));
-			*rest = *rest + ft_strlen(*line) + 1;
+			temp = ft_strdup(*rest + ft_strlen(*line) + 1);
+			free(*rest);
+			*rest = temp;
 			return (LINEREAD);
 		}
 		*line = ft_strdup(*rest);
+		free(*rest);
 		*rest = NULL;
 	}
 	return (RIGHT);

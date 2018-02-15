@@ -29,6 +29,7 @@ int create_tab(t_list *way, int *tab, int nb_ant)
 
 void test_tab(t_map *map, t_list *way, int *tab, int sauv_i, int name)
 {
+	char *ret_itoa;
 	int i;
 
 	i = 0;
@@ -36,10 +37,12 @@ void test_tab(t_map *map, t_list *way, int *tab, int sauv_i, int name)
 	{
 		if (tab[i] > 0)
 		{
-			map->print->content = ft_strjoin(map->print->content, " L");
-			map->print->content = ft_strjoin(map->print->content, ft_itoa(name));
-			map->print->content = ft_strjoin(map->print->content, "-");
-			map->print->content = ft_strjoin(map->print->content, way->content);
+			map->print->content = ft_strjoindel(map->print->content, " L");
+			ret_itoa = ft_itoa(name);
+			map->print->content = ft_strjoindel(map->print->content, ret_itoa);
+			free(ret_itoa);
+			map->print->content = ft_strjoindel(map->print->content, "-");
+			map->print->content = ft_strjoindel(map->print->content, way->content);
 			name--;
 		}
 		way = way->next;

@@ -40,6 +40,7 @@ int				ft_printf(const char *format, ...);
 void	read_info(t_map *map);
 int extract_name(t_map *map, char *line);
 int gestion_connexion(t_map *map, char *line);
+void 	free_tab(char **tab);
 
 void  parsing(t_map *map);
 

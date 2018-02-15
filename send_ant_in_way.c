@@ -19,15 +19,12 @@ void	suite(t_map map, int *send_ant, int nb_cycle)
 
 	map.print = ft_lstnew("Tour :", 8);
 	next = map.print;
-
-
 	i = 0;
 	while (++i < nb_cycle + 1)
 	{
 		next->next = ft_lstnew("Tour :", 6);
 		next = next->next;
 	}
-
 	next = map.print;
 	i = 0;
 	map.name_ant = 0;
@@ -40,12 +37,12 @@ void	suite(t_map map, int *send_ant, int nb_cycle)
 		map.all_the_way = map.all_the_way->next;
 		i++;
 	}
-
 	next = map.print;
 	while (next)
 	{
 		if (ft_strcmp(next->content, "Tour :") != 0)
 			ft_printf("%s\n", next->content + 7);
+		free(next->content);
 		next = next->next;
 	}
 }

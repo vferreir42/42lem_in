@@ -12,6 +12,18 @@
 
 #include "lem_in.h"
 
+void 	free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while(tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+}
+
 void	set_variable_name(t_map *map, t_list *next, int type_salle)
 {
 	next->info_salle = type_salle;
@@ -54,15 +66,17 @@ int		extract_name(t_map *map, char *line)
 		return (WRONG);
 	if (map->tab)
 	{
-		next->next = ft_lstnew(tab[0], ft_strlen(tab[0]) * 8);
+		next->next = ft_lstnew(tab[0], ft_strlen(tab[0]));
 		next = next->next;
 	}
 	else
 	{
-		map->tab = ft_lstnew(tab[0], ft_strlen(tab[0]) * 8);
+		map->tab = ft_lstnew(tab[0], ft_strlen(tab[0]));
 		next = map->tab;
 	}
 	set_variable_name(map, next, map->type_salle);
+	free_tab(tab);
+	free(tab);
 	map->type_salle = 0;
 	return (1);
 }

@@ -56,13 +56,15 @@ int extract_connexion(t_map *map, char *line)
   if (next == NULL)
     return (WRONG);
   if (next->co == NULL)
-    next->co = ft_lstnew(tab[1], ft_strlen(tab[0]));
+  {
+    next->co = ft_lstnew(tab[1], ft_strlen(tab[0]) * 10);
+  }
   else
   {
     nxt = next->co;
     while (nxt->next)
       nxt = nxt->next;
-    nxt->next = ft_lstnew(tab[1], ft_strlen(tab[0]));
+    nxt->next = ft_lstnew(tab[1], ft_strlen(tab[0]) * 10);
   }
   next = extract_connexion_parsing(map, tab, 1, 0);
   if (next == NULL)
@@ -76,6 +78,8 @@ int extract_connexion(t_map *map, char *line)
       nxt = nxt->next;
     nxt->next = ft_lstnew(tab[0], ft_strlen(tab[0]));
   }
+  free_tab(tab);
+  free(tab);
   return (1);
 }
 
@@ -90,5 +94,6 @@ int gestion_connexion(t_map *map, char *line)
       return (WRONG);
     free(line);
   }
+  free(line);
   return (1);
 }

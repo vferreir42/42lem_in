@@ -61,14 +61,17 @@ void	read_info(t_map *map)
 {
   char *line;
 
+  line = NULL;
   set_variable_read(map);
   while (get_next_line(0, &line) > 0)
   {
     if (partie_nb_ant(line) == 1)
+    {
       if (map->nb_ant == -1)
         map->nb_ant = ft_atoi(line);
       else
         return ;
+    }
     else if (ft_strncmp(line, "#", 1) == 0)
     {
       if (gestion_comment(map, line) == WRONG)
@@ -77,7 +80,7 @@ void	read_info(t_map *map)
     else if (ft_strchr(line, '-') == NULL)
     {
       if (extract_name(map, line) == WRONG)
-        return ;
+          return ;
     }
     else
       break ;

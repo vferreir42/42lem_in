@@ -42,20 +42,6 @@ int main(void)
 //	printf("READ OK\n");
 	parsing(&map);
 //	printf("PARSING OK\n");
-	/*
-	while (map.tab)
-	{
-		printf("Name : %s ||", map.tab->content);
-		while (map.tab->co)
-		{
-			printf(" %s ||", map.tab->co->content);
-			map.tab->co = map.tab->co->next;
-		}
-		printf("\n");
-		map.tab = map.tab->next;
-	}
-	return 0;
-	*/
 	create_graph(map);
 //	printf("CREATE GRAPH OK\n");
 	add_position(map);
@@ -70,10 +56,7 @@ int main(void)
 		printf("Error\n");
 		return (0);
 	}
-//	printf("NO ERROR\n");
 	send_ant_in_way(map);
-
 //	free_all(&map);
-
 	return (0);
 }

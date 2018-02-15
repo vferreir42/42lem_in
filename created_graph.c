@@ -20,7 +20,10 @@ t_list *renvoie_list(t_map map, char *name)
 	while (tab && ft_strcmp(tab->content, name) != 0)
 		tab = tab->next;
 	if (tab == NULL)
+	{
+		printf("Exit\n");
 		exit (0);
+	}
 	return (tab);
 }
 
@@ -29,30 +32,28 @@ void create_graph(t_map map)
 	t_list *link;
 	t_list *next;
 	t_list *tab;
-	t_list *sauv;
+	t_list *tab_co;
 
 	link = NULL;
 	tab = map.tab;
 	while (tab)
 	{
-		while (tab->co)
+		tab_co = tab->co;
+		while (tab_co)
 		{
 			if (link == NULL)
 			{
-				link = ft_lstnew(tab->co->content, ft_strlen(tab->co->content) * 120);
-				link->l_content = renvoie_list(map, tab->co->content);
+				link = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
+				link->l_content = renvoie_list(map, tab_co->content);
 				next = link;
 			}
 			else
 			{
-				next->next = ft_lstnew(tab->co->content, ft_strlen(tab->co->content) * 120);
+				next->next = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
 				next = next->next;
-				next->l_content = renvoie_list(map, tab->co->content);
+				next->l_content = renvoie_list(map, tab_co->content);
 			}
-			sauv = tab->co;
-			free(tab->co->content);
-			tab->co = tab->co->next;
-			free(sauv);
+			tab_co = tab_co->next;
 		}
 		tab->link = link;
 		link = NULL;
