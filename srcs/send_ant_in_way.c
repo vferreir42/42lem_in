@@ -6,23 +6,38 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:10:17 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/27 15:18:33 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 17:58:18 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	print_result(t_list *next)
+{
+	t_list	*sauv;
+
+	while (next)
+	{
+		sauv = next;
+		if (ft_strlen(next->content) > 6)
+			printf("%s\n", next->content + 7);
+		free(next->content);
+		next = next->next;
+		free(sauv);
+	}
+}
 
 void	suite(t_map map, int *send_ant, int nb_cycle)
 {
 	t_list *next;
 	int		i;
 
-	map.print = ft_lstnew("Tour :", 8);
+	map.print = ft_lstnew("Tour :", 20);
 	next = map.print;
 	i = 0;
 	while (++i < nb_cycle + 1)
 	{
-		next->next = ft_lstnew("Tour :", 6);
+		next->next = ft_lstnew("Tour :", 20);
 		next = next->next;
 	}
 	next = map.print;
@@ -30,21 +45,13 @@ void	suite(t_map map, int *send_ant, int nb_cycle)
 	map.name_ant = 0;
 	while (send_ant[i] && send_ant[i] > 0)
 	{
-		map.all_the_way->l_content = map.all_the_way->l_content->next;
-		display_way(&map, map.all_the_way->l_content, send_ant[i], map.name_ant);
+		display_way(&map, map.all_the_way->l_content->next, send_ant[i], map.name_ant);
 		map.name_ant += send_ant[i];
 		map.print = next;
 		map.all_the_way = map.all_the_way->next;
 		i++;
 	}
-	next = map.print;
-	while (next)
-	{
-		if (ft_strcmp(next->content, "Tour :") != 0)
-			ft_printf("%s\n", next->content + 7);
-		free(next->content);
-		next = next->next;
-	}
+	print_result(map.print);
 }
 
 void	fonction(t_map map, int *size_way, int *send_ant)

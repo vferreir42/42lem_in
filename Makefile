@@ -12,27 +12,26 @@
 
 NAME	=	lem-in
 
-SRCS	=	main.c									\
-					read.c								\
-						extract_name.c			\
-						extract_connexion.c	\
-					set_variable.c				\
-					parsing.c							\
-					created_graph.c				\
-					position_salle.c			\
-					number_way.c					\
-					shortest_way.c				\
-					all_the_way.c					\
-					send_ant_in_way.c			\
-					display_way.c					\
-					display.c							\
+SRCS	=	./srcs/main.c									\
+					./srcs/read.c								\
+						./srcs/extract_name.c			\
+						./srcs/extract_connexion.c	\
+					./srcs/parsing.c							\
+					./srcs/created_graph.c				\
+					./srcs/position_salle.c			\
+					./srcs/number_way.c					\
+					./srcs/shortest_way.c				\
+					./srcs/all_the_way.c					\
+					./srcs/send_ant_in_way.c			\
+					./srcs/display_way.c					\
+					./srcs/display.c							\
 				./get_next_line/get_next_line.c
 
 OBJS	=	$(SRCS:.c=.o)
 
 CC	=	@gcc
 
-CFLAGS	=	-I ./libft/includes -I ./get_next_line
+CFLAGS	=	-I ./libft/includes -I ./get_next_line -I ./includes
 
 LIB_PATH	=	./libft/libft.a ./ft_printf/libftprintf.a
 

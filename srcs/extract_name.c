@@ -6,18 +6,18 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 18:12:45 by vferreir          #+#    #+#             */
-/*   Updated: 2018/02/14 18:19:58 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:26:26 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void 	free_tab(char **tab)
+void	free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(tab[i])
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;

@@ -19,6 +19,7 @@ int	ft_atoi(const char *nptr)
 	int	neg;
 
 	i = 0;
+	neg = 0;
 	while (nptr[i] == ' ' || nptr[i] == '\t'
 			|| nptr[i] == '\v' || nptr[i] == '\f'
 			|| nptr[i] == '\n' || nptr[i] == '\r')

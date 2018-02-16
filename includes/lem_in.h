@@ -22,6 +22,7 @@
 typedef struct	s_map
 {
 	t_list *tab;
+	t_list *way_inverse;
 	t_list *all_the_way;
 	t_list *way;
 	t_list *print;
