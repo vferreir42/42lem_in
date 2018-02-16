@@ -6,7 +6,7 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:10:17 by vferreir          #+#    #+#             */
-/*   Updated: 2018/02/16 17:58:18 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 18:05:43 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	print_result(t_list *next)
 	{
 		sauv = next;
 		if (ft_strlen(next->content) > 6)
-			printf("%s\n", next->content + 7);
+		{
+			write(1, next->content + 7, ft_strlen(next->content + 7));
+			write(1, "\n", 1);
+		}
 		free(next->content);
 		next = next->next;
 		free(sauv);
@@ -29,7 +32,7 @@ void	print_result(t_list *next)
 
 void	suite(t_map map, int *send_ant, int nb_cycle)
 {
-	t_list *next;
+	t_list	*next;
 	int		i;
 
 	map.print = ft_lstnew("Tour :", 20);
@@ -45,7 +48,7 @@ void	suite(t_map map, int *send_ant, int nb_cycle)
 	map.name_ant = 0;
 	while (send_ant[i] && send_ant[i] > 0)
 	{
-		display_way(&map, map.all_the_way->l_content->next, send_ant[i], map.name_ant);
+		d(&map, map.all_the_way->l_content->next, send_ant[i], map.name_ant);
 		map.name_ant += send_ant[i];
 		map.print = next;
 		map.all_the_way = map.all_the_way->next;
@@ -77,6 +80,8 @@ void	fonction(t_map map, int *size_way, int *send_ant)
 	i = -1;
 	while (total != map.nb_ant && send_ant[++i] && ++total)
 		send_ant[i] += 1;
+	if (map.nb_ant == 1 && send_ant[0] == 0)
+		send_ant[0] = 1;
 	suite(map, send_ant, nb_cycle);
 }
 

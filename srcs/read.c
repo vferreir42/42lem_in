@@ -57,21 +57,16 @@ void	set_variable_read(t_map *map)
 	map->tab = NULL;
 }
 
-void	read_info(t_map *map)
+void	read_info(t_map *map, char *line)
 {
-	char	*line;
-
-	line = NULL;
 	set_variable_read(map);
 	while (get_next_line(0, &line) > 0)
 	{
 		if (partie_nb_ant(line) == 1)
-		{
 			if (map->nb_ant == -1)
 				map->nb_ant = ft_atoi(line);
 			else
 				return ;
-		}
 		else if (ft_strncmp(line, "#", 1) == 0)
 		{
 			if (gestion_comment(map, line) == WRONG)

@@ -24,30 +24,31 @@ SRCS	=	./srcs/main.c									\
 					./srcs/all_the_way.c					\
 					./srcs/send_ant_in_way.c			\
 					./srcs/display_way.c					\
-					./srcs/display.c							\
 				./get_next_line/get_next_line.c
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@gcc
+CC	=	@gcc -Wall -Werror -Wextra
 
 CFLAGS	=	-I ./libft/includes -I ./get_next_line -I ./includes
 
-LIB_PATH	=	./libft/libft.a ./ft_printf/libftprintf.a
+LIB_PATH	=	./libft/libft.a
 
 RM	=	rm -rf
 
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJS)
+	@make -C libft/
 	@$(CC) $(OBJS) $(LIB_PATH) -o $(NAME)
-	@$(RM) $(OBJS)
 	@echo "\033[32mLEM_IN COMPILATING DONE\033[0m"
 
 clean	:
-	$(RM) $(OBJS)
+	@make clean -C libft/
+	@$(RM) $(OBJS)
 
 fclean	:
+	@make fclean -C libft/
 	@$(RM) $(OBJS)
 	@$(RM) $(NAME)
 	@echo "\033[31mLEM_IN CLEANING DONE\033[0m"

@@ -6,15 +6,15 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 15:01:46 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/27 15:01:47 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 18:59:13 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int create_tab(t_list *way, int *tab, int nb_ant)
+int		create_tab(t_list *way, int *tab, int nb_ant)
 {
-	int i;
+	int	i;
 
 	tab[0] = nb_ant;
 	i = 1;
@@ -27,11 +27,13 @@ int create_tab(t_list *way, int *tab, int nb_ant)
 	return (i);
 }
 
-void test_tab(t_map *map, t_list *way, int *tab, int sauv_i, int name)
+void	test_tab(t_map *map, t_list *way, int *tab, int sauv_i)
 {
-	char *ret_itoa;
-	int i;
+	char	*ret_itoa;
+	int		i;
+	int		name;
 
+	name = map->passe;
 	i = 0;
 	while (++i < sauv_i)
 	{
@@ -42,7 +44,8 @@ void test_tab(t_map *map, t_list *way, int *tab, int sauv_i, int name)
 			map->print->content = ft_strjoindel(map->print->content, ret_itoa);
 			free(ret_itoa);
 			map->print->content = ft_strjoindel(map->print->content, "-");
-			map->print->content = ft_strjoindel(map->print->content, way->content);
+			map->print->content =
+			ft_strjoindel(map->print->content, way->content);
 			name--;
 		}
 		way = way->next;
@@ -50,11 +53,11 @@ void test_tab(t_map *map, t_list *way, int *tab, int sauv_i, int name)
 	map->print = map->print->next;
 }
 
-void display_way(t_map *map, t_list *way, int nb_ant, int name)
+void	d(t_map *map, t_list *way, int nb_ant, int name)
 {
-	int tab[10000];
-	int i;
-	int sauv_i;
+	int		tab[10000];
+	int		i;
+	int		sauv_i;
 
 	sauv_i = create_tab(way, tab, nb_ant);
 	while (tab[sauv_i - 1] != nb_ant)
@@ -68,7 +71,8 @@ void display_way(t_map *map, t_list *way, int nb_ant, int name)
 				tab[i - 1] -= 1;
 			}
 		}
-		test_tab(map, way, tab, sauv_i, name + 1);
+		map->passe = name + 1;
+		test_tab(map, way, tab, sauv_i);
 		if (name + 1 < nb_ant + map->name_ant)
 			name++;
 	}

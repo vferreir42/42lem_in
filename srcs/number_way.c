@@ -6,13 +6,13 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 15:46:14 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/21 15:46:16 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 18:08:10 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void  reset_gris(t_list *list)
+void	reset_gris(t_list *list)
 {
 	while (list)
 	{
@@ -21,11 +21,11 @@ void  reset_gris(t_list *list)
 	}
 }
 
-void recursive_nb_way(t_map map, t_list *tab, int position)
+void	recursive_nb_way(t_map map, t_list *tab, int position)
 {
-	int position_next;
-	int i;
-	t_list *link;
+	int		position_next;
+	int		i;
+	t_list	*link;
 
 	i = 0;
 	link = tab->link;
@@ -45,10 +45,10 @@ void recursive_nb_way(t_map map, t_list *tab, int position)
 	}
 }
 
-void 	add_nbway(t_map map)
+void	add_nbway(t_map map)
 {
-	t_list *tab;
-	t_list *link;
+	t_list	*tab;
+	t_list	*link;
 
 	reset_gris(map.tab);
 	tab = map.tab;

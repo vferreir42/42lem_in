@@ -12,13 +12,13 @@
 
 #include "lem_in.h"
 
-int main(void)
+int	main(void)
 {
 	t_map map;
 
-	read_info(&map);
+	read_info(&map, NULL);
 	parsing(&map);
-	create_graph(map);
+	graph(map, NULL, NULL, map.tab);
 	add_position(map);
 	add_nbway(map);
 	all_way(&map);

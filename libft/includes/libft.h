@@ -6,7 +6,7 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 13:40:56 by vferreir          #+#    #+#             */
-/*   Updated: 2017/12/26 13:03:09 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 19:18:49 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,72 +17,25 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct		s_list {
-	void			*content;
-	char			*coord_x;
-	char			*coord_y;
-	int 			info_salle;
-	int				position;
-	int				nb_way;
-	int 			size_way;
-	int				gris;
-	int				nb_ant;
-	int       name_ant;
-
-	size_t			content_size;
-
-	struct s_list 		*l_content;
-	struct s_list 		*link;
-	struct s_list 		*co;
-	struct s_list			*conext;
-
-	struct s_list	*next;
+typedef struct		s_list
+{
+	void				*content;
+	char				*coord_x;
+	char				*coord_y;
+	int					info_salle;
+	int					position;
+	int					nb_way;
+	int					size_way;
+	int					gris;
+	int					nb_ant;
+	int					name_ant;
+	size_t				content_size;
+	struct s_list		*l_content;
+	struct s_list		*link;
+	struct s_list		*co;
+	struct s_list		*conext;
+	struct s_list		*next;
 }					t_list;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 char				*ft_itoabase(unsigned long long value, int base);
 int					ft_not_putwchar(int value);

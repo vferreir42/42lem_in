@@ -6,13 +6,13 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 16:15:39 by vferreir          #+#    #+#             */
-/*   Updated: 2018/01/22 16:15:40 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 18:10:23 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_list *renvoie_list(t_map map, char *name)
+t_list	*renvoie_list(t_map map, char *name)
 {
 	t_list	*tab;
 
@@ -21,39 +21,34 @@ t_list *renvoie_list(t_map map, char *name)
 		tab = tab->next;
 	if (tab == NULL)
 	{
-		printf("Exit\n");
-		exit (0);
+		write(1, "Error\n", 6);
+		exit(0);
 	}
 	return (tab);
 }
 
-void create_graph(t_map map)
+void	graph(t_map map, t_list *link, t_list *next, t_list *tab)
 {
-	t_list *link;
-	t_list *next;
-	t_list *tab;
-	t_list *tab_co;
+	t_list	*t;
 
-	link = NULL;
-	tab = map.tab;
 	while (tab)
 	{
-		tab_co = tab->co;
-		while (tab_co)
+		t = tab->co;
+		while (t)
 		{
 			if (link == NULL)
 			{
-				link = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
-				link->l_content = renvoie_list(map, tab_co->content);
+				link = ft_lstnew(t->content, ft_strlen(t->content) * 120);
+				link->l_content = renvoie_list(map, t->content);
 				next = link;
 			}
 			else
 			{
-				next->next = ft_lstnew(tab_co->content, ft_strlen(tab_co->content) * 120);
+				next->next = ft_lstnew(t->content, ft_strlen(t->content) * 120);
 				next = next->next;
-				next->l_content = renvoie_list(map, tab_co->content);
+				next->l_content = renvoie_list(map, t->content);
 			}
-			tab_co = tab_co->next;
+			t = t->next;
 		}
 		tab->link = link;
 		link = NULL;
