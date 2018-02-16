@@ -6,7 +6,7 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 13:57:16 by vferreir          #+#    #+#             */
-/*   Updated: 2018/02/16 19:23:04 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/02/16 20:00:09 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_map
 	t_list	*way;
 	t_list	*print;
 	t_list	*read;
+	char	*gnl;
 	int		passe;
 	int		type_salle;
 	int		name_ant;

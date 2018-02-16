@@ -81,6 +81,8 @@ int		gestion_connexion(t_map *map, char *line)
 	free(line);
 	while (get_next_line(0, &line) > 0)
 	{
+		map->gnl = ft_strjoindel(map->gnl, line);
+		map->gnl = ft_strjoindel(map->gnl, "\n");
 		if (extract_connexion(map, line, 0, 1) == 0)
 			return (WRONG);
 		free(line);

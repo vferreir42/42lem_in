@@ -62,6 +62,8 @@ void	read_info(t_map *map, char *line)
 	set_variable_read(map);
 	while (get_next_line(0, &line) > 0)
 	{
+		map->gnl = ft_strjoindel(map->gnl, line);
+		map->gnl = ft_strjoindel(map->gnl, "\n");
 		if (partie_nb_ant(line) == 1)
 			if (map->nb_ant == -1)
 				map->nb_ant = ft_atoi(line);
@@ -81,6 +83,5 @@ void	read_info(t_map *map, char *line)
 			break ;
 		free(line);
 	}
-	if (gestion_connexion(map, line) == WRONG)
-		return ;
+	gestion_connexion(map, line);
 }

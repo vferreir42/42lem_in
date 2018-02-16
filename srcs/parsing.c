@@ -16,7 +16,7 @@ void	quit(t_map *map)
 {
 	t_list	*sauv;
 
-	write(1, "Error\n", 6);
+	write(1, "ERROR\n", 6);
 	while (map->tab)
 	{
 		sauv = map->tab;
